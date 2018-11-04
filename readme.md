@@ -32,5 +32,5 @@ When you click on "Program > Settings" the settings window will be displayed. He
 - ~~More filter options~~
 - Option to download a track
 - List of the replays
-- List of empbedded objects (if present)
+- ~~List of empbedded objects (if present)~~
 - ~~Option to open the track on Mania Exchange~~
