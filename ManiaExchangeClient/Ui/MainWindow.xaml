@@ -11,6 +11,7 @@
     Width="1300"
     Height="820"
     mah:DialogParticipation.Register="{Binding}"
+    Icon="../ManiaExchangeClientIcon.ico"
     Loaded="MainWindow_OnLoaded"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
