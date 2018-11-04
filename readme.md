@@ -1,6 +1,14 @@
 # Mania Exchange - Client
 
 **TOC**
+<!-- TOC -->
+
+- [General](#general)
+- [Using](#using)
+- [Settings](#settings)
+- [To-Dos](#to-dos)
+
+<!-- /TOC -->
 
 ## General
 This is a small program to gather informations from [Mania Exchange](https://tm.mania-exchange.com/) via their provides [API](https://api.mania-exchange.com/).
