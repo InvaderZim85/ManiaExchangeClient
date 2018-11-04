@@ -1,0 +1,110 @@
+﻿<mah:MetroWindow
+    x:Class="ManiaExchangeClient.Ui.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:customControls="clr-namespace:ManiaExchangeClient.Ui.CustomControls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:ManiaExchangeClient.Ui"
+    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Mania Exchange - Client"
+    Width="1100"
+    Height="700"
+    mah:DialogParticipation.Register="{Binding}"
+    Loaded="MainWindow_OnLoaded"
+    mc:Ignorable="d">
+    <mah:MetroWindow.DataContext>
+        <local:MainWindowViewModel />
+    </mah:MetroWindow.DataContext>
+    <DockPanel LastChildFill="True">
+        <!--  Main menu  -->
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="Program">
+                <MenuItem Command="{Binding SettingsCommand}" Header="Settings" />
+                <MenuItem Click="CloseMenuItem_Click" Header="Close" />
+            </MenuItem>
+        </Menu>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="400" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <GroupBox
+                Grid.Column="0"
+                Margin="3"
+                Header="Tracks">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <Label
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Content="Author:" />
+                    <TextBox
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Margin="3"
+                        Text="{Binding Author}" />
+                    <Button
+                        Grid.Row="0"
+                        Grid.Column="2"
+                        Width="60"
+                        Margin="3"
+                        Command="{Binding SearchCommand}"
+                        Content="Search" />
+
+                    <DataGrid
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="3"
+                        AlternatingRowBackground="LightBlue"
+                        AutoGenerateColumns="False"
+                        CanUserAddRows="False"
+                        CanUserDeleteRows="False"
+                        GridLinesVisibility="All"
+                        ItemsSource="{Binding TrackList}"
+                        SelectedItem="{Binding SelectedTrack}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn
+                                Width="*"
+                                Binding="{Binding Name}"
+                                Header="Name" />
+                            <DataGridTextColumn
+                                Width="Auto"
+                                Binding="{Binding UpdatedAt}"
+                                Header="Uploaded" />
+                            <DataGridTextColumn
+                                Width="Auto"
+                                Binding="{Binding AwardCount}"
+                                Header="Awards" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </GroupBox>
+
+            <GridSplitter
+                Grid.Column="1"
+                Width="3"
+                HorizontalAlignment="Stretch" />
+
+            <customControls:TrackDetailControl
+                Grid.Column="2"
+                Margin="3"
+                IsEnabled="{Binding DetailEnabled}"
+                SelectedTrack="{Binding SelectedTrack}" />
+        </Grid>
+
+    </DockPanel>
+</mah:MetroWindow>
