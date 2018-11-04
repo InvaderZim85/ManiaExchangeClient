@@ -28,7 +28,8 @@ When you click on "Program > Settings" the settings window will be displayed. He
 ![Settings](Images/002.png)
 
 ## To-Dos
-- List of the latest tracks
+- ~~List of the latest tracks~~
+- ~~More filter options~~
 - Option to download a track
 - List of the replays
 - List of empbedded objects (if present)

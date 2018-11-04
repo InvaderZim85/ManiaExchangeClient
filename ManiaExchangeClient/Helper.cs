@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using ManiaExchangeClient.DataObjects;
 using Newtonsoft.Json;
@@ -55,5 +56,27 @@ namespace ManiaExchangeClient
 
             return File.Exists(path);
         }
+
+        /// <summary>
+        /// Gets the list with the environments
+        /// </summary>
+        /// <returns>The list with the environments</returns>
+        public static List<Environment> EnvironmentList()
+        {
+            return new List<Environment>
+            {
+                new Environment {Id = 0, Name = "All"},
+                new Environment {Id = 1, Name = "Canyon"},
+                new Environment {Id = 2, Name = "Stadium"},
+                new Environment {Id = 3, Name = "Valley"},
+                new Environment {Id = 4, Name = "Lagoon"}
+            };
+        }
     }
 }
+
+//0	Combined(All)/Any
+//1	Canyon/CanyonCar
+//2	Stadium/StadiumCar
+//3	Valley/ValleyCar
+//4	Lagoon/LagoonCar

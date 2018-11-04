@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ManiaExchangeClient.DataObjects;
 using RestSharp;
+using Environment = ManiaExchangeClient.DataObjects.Environment;
 
 namespace ManiaExchangeClient.Business
 {
@@ -73,26 +74,39 @@ namespace ManiaExchangeClient.Business
         /// Loads the tracks of the given author
         /// </summary>
         /// <param name="author">The author</param>
+        /// <param name="trackname">The name of the track</param>
+        /// <param name="environment">The selected environment</param>
         /// <returns>The list of tracks</returns>
-        public async Task<List<Track>> LoadTracks(string author)
+        public async Task<List<Track>> LoadTracks(string author, string trackname, Environment environment)
         {
             var limit = 50;
+
+            var showLatest = false;
+            if (string.IsNullOrEmpty(author) && string.IsNullOrEmpty(trackname))
+            {
+                limit = 10;
+                showLatest = true;
+            }
+
             var page = 1;
 
             var result = new List<Track>();
 
-            var initData = await LoadTracks(author, limit, page);
+            var initData = await LoadTracks(author, trackname, environment, limit, page, showLatest);
 
             if (initData == null)
                 return result;
 
             result.AddRange(initData.Results);
 
+            if (showLatest)
+                return result;
+
             var maxEntries = Math.Round(initData.TotalItemCount / (double)limit);
 
             for (page = 2; page <= maxEntries; page++)
             {
-                var data = await LoadTracks(author, limit, page);
+                var data = await LoadTracks(author, trackname, environment, limit, page);
 
                 if (data != null)
                     result.AddRange(data.Results);
@@ -105,10 +119,13 @@ namespace ManiaExchangeClient.Business
         /// Loads a list of tracks of the author
         /// </summary>
         /// <param name="author">The author name</param>
+        /// <param name="trackname">The name of the track</param>
+        /// <param name="environment">The selected environment</param>
         /// <param name="limit">The limit of results per page</param>
         /// <param name="page">The page</param>
+        /// <param name="showLatest">true when only the latest tracks should be shown, otherwise false</param>
         /// <returns>The list with the tracks</returns>
-        private async Task<TrackList> LoadTracks(string author, int limit, int page)
+        private async Task<TrackList> LoadTracks(string author, string trackname, Environment environment, int limit, int page, bool showLatest = false)
         {
             // Step 0: Get the endpoint
             var endpoint = _settings.Endpoints.FirstOrDefault(f => f.Type == EndpointType.TrackSearch);
@@ -124,7 +141,21 @@ namespace ManiaExchangeClient.Business
 
             request.AddParameter("api", "on");
             request.AddParameter("limit", limit);
-            request.AddParameter("author", author);
+
+            if (showLatest)
+            {
+                request.AddParameter("mode", 2);
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(author))
+                    request.AddParameter("author", author);
+                if (!string.IsNullOrEmpty(trackname))
+                    request.AddParameter("trackname", trackname);
+            }
+
+            if (environment.Id != 0)
+                request.AddParameter("environments", environment.Id);
             request.AddParameter("page", page);
 
             return await ExecuteAsync<TrackList>(request, endpoint.Path);

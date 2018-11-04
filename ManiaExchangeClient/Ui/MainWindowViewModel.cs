@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Input;
 using MahApps.Metro.Controls.Dialogs;
 using ManiaExchangeClient.Business;
@@ -85,6 +86,62 @@ namespace ManiaExchangeClient.Ui
         }
 
         /// <summary>
+        /// Backing field for <see cref="EnvironmentList"/>
+        /// </summary>
+        private ObservableCollection<Environment> _environmentList;
+
+        /// <summary>
+        /// Gets or sets the list with the environments
+        /// </summary>
+        public ObservableCollection<Environment> EnvironmentList
+        {
+            get => _environmentList;
+            set => SetField(ref _environmentList, value);
+        }
+
+        /// <summary>
+        /// Backing field for <see cref="SelectedEnvironment"/>
+        /// </summary>
+        private Environment _selectedEnvironment;
+
+        /// <summary>
+        /// Gets or sets the selected environment
+        /// </summary>
+        public Environment SelectedEnvironment
+        {
+            get => _selectedEnvironment;
+            set => SetField(ref _selectedEnvironment, value);
+        }
+
+        /// <summary>
+        /// Backing field for <see cref="TrackName"/>
+        /// </summary>
+        private string _trackName;
+
+        /// <summary>
+        /// Gets or sets the track name
+        /// </summary>
+        public string TrackName
+        {
+            get => _trackName;
+            set => SetField(ref _trackName, value);
+        }
+
+        /// <summary>
+        /// Backing field for <see cref="TrackListHeader"/>
+        /// </summary>
+        private string _trackListHeader = "Tracks";
+
+        /// <summary>
+        /// Gets or sets the tracklist header
+        /// </summary>
+        public string TrackListHeader
+        {
+            get => _trackListHeader;
+            set => SetField(ref _trackListHeader, value);
+        }
+
+        /// <summary>
         /// The command to search for a track
         /// </summary>
         public ICommand SearchCommand => new DelegateCommand(SearchTracks);
@@ -103,6 +160,10 @@ namespace ManiaExchangeClient.Ui
             _dialogCoordinator = dialogCoordinator;
 
             _restManager = new RestManager();
+
+            EnvironmentList = new ObservableCollection<Environment>(Helper.EnvironmentList());
+
+            SelectedEnvironment = EnvironmentList.FirstOrDefault(f => f.Id == 0);
         }
 
         /// <summary>
@@ -122,19 +183,41 @@ namespace ManiaExchangeClient.Ui
         /// </summary>
         private async void SearchTracks()
         {
-            if (string.IsNullOrEmpty(Author))
-                return;
-
-            var controller = await _dialogCoordinator.ShowProgressAsync(this, "Loading",
-                $"Loading tracks for the author: \"{Author}\". Please wait...");
+            var controller = await _dialogCoordinator.ShowProgressAsync(this, "Loading - Plase wait...",
+                GetProgressMessage());
             controller.SetIndeterminate();
 
-            var data = await _restManager.LoadTracks("invader_zim");
+            var data = await _restManager.LoadTracks(Author, TrackName, SelectedEnvironment);
 
             if (data != null)
                 TrackList = new ObservableCollection<Track>(data);
 
+            TrackListHeader = $"Tracks{(data != null ? $" - {data.Count}" : "")}";
+
             await controller.CloseAsync();
+        }
+
+        /// <summary>
+        /// Gets the progress message
+        /// </summary>
+        /// <returns>The message for the progress dialog</returns>
+        private string GetProgressMessage()
+        {
+            var msg = "Values:";
+
+            if (!string.IsNullOrEmpty(Author))
+                msg += $"\r\n- Author: {Author}";
+
+            if (!string.IsNullOrEmpty(TrackName))
+                msg += $"\r\n- Track name: {TrackName}";
+
+            if (string.IsNullOrEmpty(Author) && string.IsNullOrEmpty(TrackName))
+                msg += "\r\n- Latest 10 tracks.";
+
+            if (SelectedEnvironment?.Id != 0)
+                msg += $"\r\n- Environment: {SelectedEnvironment?.Name}";
+
+            return msg;
         }
     }
 }

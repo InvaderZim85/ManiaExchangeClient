@@ -8,8 +8,8 @@
     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="Mania Exchange - Client"
-    Width="1100"
-    Height="700"
+    Width="1306.657"
+    Height="818.787"
     mah:DialogParticipation.Register="{Binding}"
     Loaded="MainWindow_OnLoaded"
     mc:Ignorable="d">
@@ -26,85 +26,128 @@
         </Menu>
 
         <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="400" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
 
             <GroupBox
-                Grid.Column="0"
+                Grid.Row="0"
                 Margin="3"
-                Header="Tracks">
+                Header="Filter">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
 
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-
-                    <Label
-                        Grid.Row="0"
-                        Grid.Column="0"
-                        Content="Author:" />
                     <TextBox
-                        Grid.Row="0"
+                        Grid.Column="0"
+                        Margin="3"
+                        mah:TextBoxHelper.Watermark="Track name"
+                        Text="{Binding TrackName}" />
+
+                    <TextBox
                         Grid.Column="1"
                         Margin="3"
+                        mah:TextBoxHelper.Watermark="Author"
                         Text="{Binding Author}" />
-                    <Button
-                        Grid.Row="0"
+
+                    <ComboBox
                         Grid.Column="2"
-                        Width="60"
+                        Margin="3"
+                        mah:TextBoxHelper.Watermark="Environment"
+                        ItemsSource="{Binding EnvironmentList}"
+                        SelectedItem="{Binding SelectedEnvironment}" />
+
+                    <Button
+                        Grid.Column="3"
+                        Width="75"
                         Margin="3"
                         Command="{Binding SearchCommand}"
                         Content="Search" />
-
-                    <DataGrid
-                        Grid.Row="1"
-                        Grid.Column="0"
-                        Grid.ColumnSpan="3"
-                        AlternatingRowBackground="LightBlue"
-                        AutoGenerateColumns="False"
-                        CanUserAddRows="False"
-                        CanUserDeleteRows="False"
-                        GridLinesVisibility="All"
-                        ItemsSource="{Binding TrackList}"
-                        SelectedItem="{Binding SelectedTrack}">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn
-                                Width="*"
-                                Binding="{Binding Name}"
-                                Header="Name" />
-                            <DataGridTextColumn
-                                Width="Auto"
-                                Binding="{Binding UpdatedAt}"
-                                Header="Uploaded" />
-                            <DataGridTextColumn
-                                Width="Auto"
-                                Binding="{Binding AwardCount}"
-                                Header="Awards" />
-                        </DataGrid.Columns>
-                    </DataGrid>
                 </Grid>
             </GroupBox>
 
-            <GridSplitter
-                Grid.Column="1"
-                Width="3"
-                HorizontalAlignment="Stretch" />
+            <Separator Grid.Row="1" Margin="3" />
 
-            <customControls:TrackDetailControl
-                x:Name="DetailControl"
-                Grid.Column="2"
-                Margin="3"
-                IsEnabled="{Binding DetailEnabled}"
-                SelectedTrack="{Binding SelectedTrack}" />
+            <!--  List  -->
+            <Grid Grid.Row="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="500" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+
+                <GroupBox
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Margin="3"
+                    Header="{Binding TrackListHeader}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <DataGrid
+                            Grid.Column="0"
+                            Grid.ColumnSpan="3"
+                            AlternatingRowBackground="LightBlue"
+                            AutoGenerateColumns="False"
+                            CanUserAddRows="False"
+                            CanUserDeleteRows="False"
+                            GridLinesVisibility="All"
+                            IsReadOnly="True"
+                            ItemsSource="{Binding TrackList}"
+                            SelectedItem="{Binding SelectedTrack}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn
+                                    Width="*"
+                                    Binding="{Binding Name}"
+                                    Header="Name" />
+                                <DataGridTextColumn
+                                    Width="Auto"
+                                    Binding="{Binding UploadedAt}"
+                                    Header="Uploaded" />
+                                <DataGridTextColumn
+                                    Width="Auto"
+                                    Binding="{Binding AwardCount}"
+                                    Header="Awards" />
+                                <DataGridTextColumn
+                                    Width="Auto"
+                                    Binding="{Binding EnvironmentName}"
+                                    Header="Environment" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </GroupBox>
+
+                <GridSplitter
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Width="3"
+                    HorizontalAlignment="Stretch" />
+
+                <customControls:TrackDetailControl
+                    x:Name="DetailControl"
+                    Grid.Row="2"
+                    Grid.Column="2"
+                    Margin="3"
+                    IsEnabled="{Binding DetailEnabled}"
+                    SelectedTrack="{Binding SelectedTrack}" />
+            </Grid>
         </Grid>
 
     </DockPanel>

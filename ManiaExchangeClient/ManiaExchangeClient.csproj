@@ -90,6 +90,7 @@
     <Compile Include="CustomEvents.cs" />
     <Compile Include="DataObjects\EndpointType.cs" />
     <Compile Include="DataObjects\Endpoint.cs" />
+    <Compile Include="DataObjects\Environment.cs" />
     <Compile Include="DataObjects\ImageType.cs" />
     <Compile Include="DataObjects\MissingEndpointException.cs" />
     <Compile Include="DataObjects\SettingsModel.cs" />
