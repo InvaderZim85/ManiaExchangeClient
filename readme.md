@@ -31,6 +31,7 @@ When you click on "Program > Settings" the settings window will be displayed. He
 - ~~List of the latest tracks~~
 - ~~More filter options~~
 - Option to download a track
-- List of the replays
+- ~~List of the replays~~
+- ~~Ability to cancel the track search~~
 - ~~List of empbedded objects (if present)~~
 - ~~Option to open the track on Mania Exchange~~

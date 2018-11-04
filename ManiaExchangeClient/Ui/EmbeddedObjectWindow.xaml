@@ -52,6 +52,8 @@
             Width="75"
             Margin="3"
             HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            Click="ButtonClose_Click"
             Content="Close" />
     </Grid>
 </mah:MetroWindow>

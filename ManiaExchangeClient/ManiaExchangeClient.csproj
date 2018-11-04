@@ -94,6 +94,7 @@
     <Compile Include="DataObjects\Environment.cs" />
     <Compile Include="DataObjects\ImageType.cs" />
     <Compile Include="DataObjects\MissingEndpointException.cs" />
+    <Compile Include="DataObjects\Replay.cs" />
     <Compile Include="DataObjects\SettingsModel.cs" />
     <Compile Include="DataObjects\Track.cs" />
     <Compile Include="DataObjects\TrackList.cs" />
@@ -116,6 +117,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Ui\MainWindowViewModel.cs" />
+    <Compile Include="Ui\ReplayWindow.xaml.cs">
+      <DependentUpon>ReplayWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Ui\ReplayWindowViewModel.cs" />
     <Compile Include="Ui\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
@@ -172,6 +177,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Ui\MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Ui\ReplayWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

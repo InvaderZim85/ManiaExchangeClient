@@ -87,5 +87,14 @@ namespace ManiaExchangeClient.Ui.CustomControls
             var id = SelectedTrack.TrackId;
             new EmbeddedObjectWindow(id).ShowDialog();
         }
+
+        /// <summary>
+        /// Occurs when the user hits the show replay buttons
+        /// </summary>
+        private void ButtonShowReplays_Click(object sender, RoutedEventArgs e)
+        {
+            var id = SelectedTrack.TrackId;
+            new ReplayWindow(id).ShowDialog();
+        }
     }
 }

@@ -6,7 +6,7 @@ using WpfUtility.Services;
 
 namespace ManiaExchangeClient.Ui
 {
-    public class EmbeddedObjectWindowViewModel : ObservableObject
+    public class ReplayWindowViewModel : ObservableObject
     {
         /// <summary>
         /// Contains the dialog coordinator
@@ -24,31 +24,31 @@ namespace ManiaExchangeClient.Ui
         private int _trackId;
 
         /// <summary>
-        /// Backing field for <see cref="ObjectList"/>
+        /// Backing field for <see cref="ReplayList"/>
         /// </summary>
-        private ObservableCollection<EmbeddedObject> _objectList;
+        private ObservableCollection<Replay> _replayList;
 
         /// <summary>
         /// Gets or sets the object list
         /// </summary>
-        public ObservableCollection<EmbeddedObject> ObjectList
+        public ObservableCollection<Replay> ReplayList
         {
-            get => _objectList;
-            set => SetField(ref _objectList, value);
+            get => _replayList;
+            set => SetField(ref _replayList, value);
         }
 
         /// <summary>
-        /// Backing field for <see cref="ObjectHeader"/>
+        /// Backing field for <see cref="ReplayHeader"/>
         /// </summary>
-        private string _objectHeader = "Objects";
+        private string _replayHeader = "Replays";
 
         /// <summary>
         /// Gets or sets the object header 
         /// </summary>
-        public string ObjectHeader
+        public string ReplayHeader
         {
-            get => _objectHeader;
-            set => SetField(ref _objectHeader, value);
+            get => _replayHeader;
+            set => SetField(ref _replayHeader, value);
         }
 
         /// <summary>
@@ -72,15 +72,15 @@ namespace ManiaExchangeClient.Ui
         /// </summary>
         private async void LoadObjects()
         {
-                var controller = await _dialogCoordinator.ShowProgressAsync(this, "Loading embedded objects - Plase wait...", "");
+            var controller = await _dialogCoordinator.ShowProgressAsync(this, "Loading replays - Plase wait...", "");
             controller.SetIndeterminate();
 
-            var data = await _restManager.LoadEmbeddedObjects(_trackId);
+            var data = await _restManager.LoadReplays(_trackId);
 
             if (data != null)
-                ObjectList = new ObservableCollection<EmbeddedObject>(data);
+                ReplayList = new ObservableCollection<Replay>(data);
 
-            ObjectHeader = $"Objects{(data != null ? $" - {data.Count}" : "")}";
+            ReplayHeader = $"Replays{(data != null ? $" - {data.Count}" : "")}";
 
             await controller.CloseAsync();
         }

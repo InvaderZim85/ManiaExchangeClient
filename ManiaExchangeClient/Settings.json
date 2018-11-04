@@ -1,44 +1,32 @@
 {
-  "Endpoints": [
-    {
-      "Path": "https://tm.mania-exchange.com/tracksearch2/search",
-      "Type": 0
-    },
-    {
-      "Path": "https://api.mania-exchange.com/tm/maps/",
-      "Type": 1
-    },
-    {
-      "Path": "https://tm.mania-exchange.com/tracks/download/",
-      "Type": 2
-    },
-    {
-      "Path": "https://api.mania-exchange.com/tm/tracks/list/latest",
-      "Type": 3
-    },
-    {
-      "Path": "https://api.mania-exchange.com/tm/tracks/worldrecord/",
-      "Type": 4
-    },
-    {
-      "Path": "https://api.mania-exchange.com/tm/replays/",
-      "Type": 5
-    },
-    {
-      "Path": "https://api.mania-exchange.com/tm/tracks/embeddedobjects/",
-      "Type": 6
-    },
-    {
-      "Path": "https://tm.mania-exchange.com/tracks/screenshot/normal/",
-      "Type": 7
-    },
-    {
-        "Path": "https://tm.mania-exchange.com/tracks/thumbnail/",
-        "Type": 8
-    },
-    {
-        "Path": "https://tm.mania-exchange.com/tracks/",
-        "Type":  9 
-    }
-  ]
+    "Endpoints": [
+        {
+            "Path": "https://tm.mania-exchange.com/tracksearch2/search",
+            "Type": 0
+        },
+        {
+            "Path": "https://api.mania-exchange.com/tm/maps/",
+            "Type": 1
+        },
+        {
+            "Path": "https://api.mania-exchange.com/tm/replays/",
+            "Type": 2
+        },
+        {
+            "Path": "https://api.mania-exchange.com/tm/tracks/embeddedobjects/",
+            "Type": 3
+        },
+        {
+            "Path": "https://tm.mania-exchange.com/tracks/screenshot/normal/",
+            "Type": 4
+        },
+        {
+            "Path": "https://tm.mania-exchange.com/tracks/thumbnail/",
+            "Type": 5
+        },
+        {
+            "Path": "https://tm.mania-exchange.com/tracks/",
+            "Type": 6
+        }
+    ]
 }

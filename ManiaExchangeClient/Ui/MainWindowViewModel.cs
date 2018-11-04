@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
 using System.Windows.Input;
 using MahApps.Metro.Controls.Dialogs;
 using ManiaExchangeClient.Business;
@@ -183,11 +184,15 @@ namespace ManiaExchangeClient.Ui
         /// </summary>
         private async void SearchTracks()
         {
+            var cancellationToken = new CancellationTokenSource();
             var controller = await _dialogCoordinator.ShowProgressAsync(this, "Loading - Plase wait...",
-                GetProgressMessage());
+                GetProgressMessage(), true);
+
+            controller.Canceled += (o, e) => cancellationToken.Cancel();
+
             controller.SetIndeterminate();
 
-            var data = await _restManager.LoadTracks(Author, TrackName, SelectedEnvironment);
+            var data = await _restManager.LoadTracks(Author, TrackName, SelectedEnvironment, cancellationToken);
 
             if (data != null)
                 TrackList = new ObservableCollection<Track>(data);

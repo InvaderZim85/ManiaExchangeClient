@@ -11,24 +11,9 @@
         TrackSearch,
 
         /// <summary>
-        /// Type to load information of a specified track
-        /// </summary>
-        TrackInformation,
-
-        /// <summary>
         /// Type to download a specified track
         /// </summary>
         TrackDownload,
-
-        /// <summary>
-        /// Gets the latest 10 tracks
-        /// </summary>
-        LatestTracks,
-
-        /// <summary>
-        /// Gets the world records for a specified track
-        /// </summary>
-        WorldRecord,
 
         /// <summary>
         /// Gets a specified amount (max 25) replays for a specified track

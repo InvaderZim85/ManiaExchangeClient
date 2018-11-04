@@ -28,20 +28,6 @@ namespace ManiaExchangeClient.Ui
         }
 
         /// <summary>
-        /// Backing field for <see cref="TrackInformation"/>
-        /// </summary>
-        private string _trackInformation;
-
-        /// <summary>
-        /// Gets or sets the track information endpoint
-        /// </summary>
-        public string TrackInformation
-        {
-            get => _trackInformation;
-            set => SetField(ref _trackInformation, value);
-        }
-
-        /// <summary>
         /// Backing field for <see cref="TrackDownload"/>
         /// </summary>
         private string _trackDownload;
@@ -53,34 +39,6 @@ namespace ManiaExchangeClient.Ui
         {
             get => _trackDownload;
             set => SetField(ref _trackDownload, value);
-        }
-
-        /// <summary>
-        /// Backing field for <see cref="LatestTracks"/>
-        /// </summary>
-        private string _latestTracks;
-
-        /// <summary>
-        /// Gets or sets the endpoint to get the endpoint for the latest tracks
-        /// </summary>
-        public string LatestTracks
-        {
-            get => _latestTracks;
-            set => SetField(ref _latestTracks, value);
-        }
-
-        /// <summary>
-        /// Backing field for <see cref="WorldRecord"/>
-        /// </summary>
-        private string _worldRecord;
-
-        /// <summary>
-        /// Gets or sets the endpoint for the world records
-        /// </summary>
-        public string WorldRecord
-        {
-            get => _worldRecord;
-            set => SetField(ref _worldRecord, value);
         }
 
         /// <summary>
@@ -181,21 +139,9 @@ namespace ManiaExchangeClient.Ui
             var trackSearch = settings.Endpoints.FirstOrDefault(f => f.Type == EndpointType.TrackSearch);
             TrackSearch = trackSearch != null ? trackSearch.Path : "";
 
-            // Track Information
-            var trackInformation = settings.Endpoints.FirstOrDefault(f => f.Type == EndpointType.TrackInformation);
-            TrackInformation = trackInformation != null ? trackInformation.Path : "";
-
             // Track Download
             var trackDownload = settings.Endpoints.FirstOrDefault(f => f.Type == EndpointType.TrackDownload);
             TrackDownload = trackDownload != null ? trackDownload.Path : "";
-
-            // Latest Tracks
-            var latestTracks = settings.Endpoints.FirstOrDefault(f => f.Type == EndpointType.LatestTracks);
-            LatestTracks = latestTracks != null ? latestTracks.Path : "";
-
-            // World Record
-            var worldRecord = settings.Endpoints.FirstOrDefault(f => f.Type == EndpointType.WorldRecord);
-            WorldRecord = worldRecord != null ? worldRecord.Path : "";
 
             // Replays
             var replays = settings.Endpoints.FirstOrDefault(f => f.Type == EndpointType.GetReplays);
@@ -226,10 +172,7 @@ namespace ManiaExchangeClient.Ui
             var settings = new SettingsModel();
 
             settings.Endpoints.Add(new Endpoint(TrackSearch, EndpointType.TrackSearch));
-            settings.Endpoints.Add(new Endpoint(TrackInformation, EndpointType.TrackInformation));
             settings.Endpoints.Add(new Endpoint(TrackDownload, EndpointType.TrackDownload));
-            settings.Endpoints.Add(new Endpoint(LatestTracks, EndpointType.LatestTracks));
-            settings.Endpoints.Add(new Endpoint(WorldRecord, EndpointType.WorldRecord));
             settings.Endpoints.Add(new Endpoint(Replays, EndpointType.GetReplays));
             settings.Endpoints.Add(new Endpoint(EmbeddedObjects, EndpointType.GetEmbeddedObjects));
             settings.Endpoints.Add(new Endpoint(Screenshots, EndpointType.Screenshot));

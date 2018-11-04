@@ -99,7 +99,7 @@
                 Grid.Column="1"
                 Margin="3"
                 IsReadOnly="True"
-                Text="{Binding ElementName=Control, Path=SelectedTrack.UploadedAt}" />
+                Text="{Binding ElementName=Control, Path=SelectedTrack.UploadedAt, ConverterCulture='de-DE', StringFormat=G}" />
 
             <Label
                 Grid.Row="2"
@@ -110,7 +110,7 @@
                 Grid.Column="3"
                 Margin="3"
                 IsReadOnly="True"
-                Text="{Binding ElementName=Control, Path=SelectedTrack.UpdatedAt}" />
+                Text="{Binding ElementName=Control, Path=SelectedTrack.UpdatedAt, ConverterCulture='de-DE', StringFormat=G}" />
 
             <Label
                 Grid.Row="3"
@@ -464,6 +464,13 @@
                     Click="ButtonShowObjects_Click"
                     Content="Show objects"
                     IsEnabled="{Binding ElementName=Control, Path=SelectedTrack.EmbeddedObjectsCount, Converter={StaticResource IntToBoolConverter}}" />
+
+                <Button
+                    Width="120"
+                    Margin="3"
+                    Click="ButtonShowReplays_Click"
+                    Content="Show replays"
+                    IsEnabled="{Binding ElementName=Control, Path=SelectedTrack.ReplayCount, Converter={StaticResource IntToBoolConverter}}" />
             </StackPanel>
 
         </Grid>
