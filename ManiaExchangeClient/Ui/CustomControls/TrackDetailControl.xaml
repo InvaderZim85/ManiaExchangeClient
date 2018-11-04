@@ -443,15 +443,20 @@
                 <Button
                     Width="120"
                     Margin="3"
+                    Click="ButtonShowScreenshot_Click"
+                    Content="Show screenshot"
+                    IsEnabled="{Binding ElementName=Control, Path=SelectedTrack.HasScreenshot}" />
+                <Button
+                    Width="120"
+                    Margin="3"
                     Click="ButtonShowThumbnail_Click"
                     Content="Show thumbnail"
                     IsEnabled="{Binding ElementName=Control, Path=SelectedTrack.HasThumbnail}" />
                 <Button
                     Width="120"
                     Margin="3"
-                    Click="ButtonShowScreenshot_Click"
-                    Content="Show screenshot"
-                    IsEnabled="{Binding ElementName=Control, Path=SelectedTrack.HasScreenshot}" />
+                    Click="ButtonShowOnline_Click"
+                    Content="Show online" />
             </StackPanel>
 
         </Grid>

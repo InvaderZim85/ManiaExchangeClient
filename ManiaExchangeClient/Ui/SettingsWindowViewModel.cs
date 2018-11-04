@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using System.Windows.Input;
 using MahApps.Metro.Controls.Dialogs;
 using ManiaExchangeClient.DataObjects;
@@ -144,6 +140,20 @@ namespace ManiaExchangeClient.Ui
         }
 
         /// <summary>
+        /// Backing field for <see cref="TrackPage"/>
+        /// </summary>
+        private string _trackPage;
+
+        /// <summary>
+        /// Gets or sets the path of the track page
+        /// </summary>
+        public string TrackPage
+        {
+            get => _trackPage;
+            set => SetField(ref _trackPage, value);
+        }
+
+        /// <summary>
         /// The command to save the settings
         /// </summary>
         public ICommand SaveCommand => new DelegateCommand(SaveSettings);
@@ -202,6 +212,10 @@ namespace ManiaExchangeClient.Ui
             // Thumbnail
             var thumbnail = settings.Endpoints.FirstOrDefault(f => f.Type == EndpointType.Thumbnail);
             Thumbnail = thumbnail != null ? thumbnail.Path : "";
+
+            // TrackPage
+            var trackPage = settings.Endpoints.FirstOrDefault(f => f.Type == EndpointType.TrackPage);
+            TrackPage = trackPage != null ? trackPage.Path : "";
         }
 
         /// <summary>
@@ -220,6 +234,7 @@ namespace ManiaExchangeClient.Ui
             settings.Endpoints.Add(new Endpoint(EmbeddedObjects, EndpointType.GetEmbeddedObjects));
             settings.Endpoints.Add(new Endpoint(Screenshots, EndpointType.Screenshot));
             settings.Endpoints.Add(new Endpoint(Thumbnail, EndpointType.Thumbnail));
+            settings.Endpoints.Add(new Endpoint(TrackPage, EndpointType.TrackPage));
 
             if (!Helper.SaveSettings(settings))
             {

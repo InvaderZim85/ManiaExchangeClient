@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using MahApps.Metro.Controls.Dialogs;
 using ManiaExchangeClient.Business;
@@ -14,6 +9,11 @@ namespace ManiaExchangeClient.Ui
 {
     public class MainWindowViewModel : ObservableObject
     {
+        /// <summary>
+        /// Event which occurs when the settings were changed
+        /// </summary>
+        public event CustomEvents.InfoEvent SettingsReloaded;
+
         /// <summary>
         /// Contains the dialog coordinator
         /// </summary>
@@ -113,6 +113,7 @@ namespace ManiaExchangeClient.Ui
             var dialog = new SettingsWindow();
             dialog.ShowDialog();
 
+            SettingsReloaded?.Invoke();
             _restManager = new RestManager();
         }
 

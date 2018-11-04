@@ -100,6 +100,7 @@
                 HorizontalAlignment="Stretch" />
 
             <customControls:TrackDetailControl
+                x:Name="DetailControl"
                 Grid.Column="2"
                 Margin="3"
                 IsEnabled="{Binding DetailEnabled}"

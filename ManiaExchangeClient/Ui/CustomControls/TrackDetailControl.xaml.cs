@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System.Diagnostics;
+using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 using ManiaExchangeClient.DataObjects;
 
@@ -10,11 +12,24 @@ namespace ManiaExchangeClient.Ui.CustomControls
     public partial class TrackDetailControl : UserControl
     {
         /// <summary>
+        /// Contains the settings
+        /// </summary>
+        private SettingsModel _settings;
+
+        /// <summary>
         /// Creates a new instance of the <see cref="TrackDetailControl"/>
         /// </summary>
         public TrackDetailControl()
         {
             InitializeComponent();
+        }
+
+        /// <summary>
+        /// Inits the control
+        /// </summary>
+        public void InitControl()
+        {
+            _settings = Helper.LoadSettings();
         }
 
         /// <summary>
@@ -48,6 +63,20 @@ namespace ManiaExchangeClient.Ui.CustomControls
         {
             var id = SelectedTrack.TrackId;
             new ShowImage(id, ImageType.Screenshot).ShowDialog();
+        }
+
+        /// <summary>
+        /// Occurs when the user hits the show online button
+        /// </summary>
+        private void ButtonShowOnline_Click(object sender, RoutedEventArgs e)
+        {
+            var id = SelectedTrack.TrackId;
+            var trackPath = _settings?.Endpoints.FirstOrDefault(f => f.Type == EndpointType.TrackPage)?.Path ?? "";
+
+            if (string.IsNullOrEmpty(trackPath))
+                return;
+
+            Process.Start($"{trackPath}{id}");
         }
     }
 }

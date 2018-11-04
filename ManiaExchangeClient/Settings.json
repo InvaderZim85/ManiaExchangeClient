@@ -33,8 +33,12 @@
       "Type": 7
     },
     {
-      "Path": "https://tm.mania-exchange.com/tracks/thumbnail/",
-      "Type": 8
+        "Path": "https://tm.mania-exchange.com/tracks/thumbnail/",
+        "Type": 8
+    },
+    {
+        "Path": "https://tm.mania-exchange.com/tracks/",
+        "Type":  9 
     }
   ]
 }

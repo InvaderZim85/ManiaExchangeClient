@@ -32,4 +32,4 @@ When you click on "Program > Settings" the settings window will be displayed. He
 - Option to download a track
 - List of the replays
 - List of empbedded objects (if present)
-- Option to open the track on Mania Exchange
+- ~~Option to open the track on Mania Exchange~~

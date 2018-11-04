@@ -48,6 +48,11 @@
         /// <summary>
         /// Gets the thumbnail of the specified track
         /// </summary>
-        Thumbnail
+        Thumbnail,
+
+        /// <summary>
+        /// Gets the path of a track page
+        /// </summary>
+        TrackPage
     }
 }
