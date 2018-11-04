@@ -12,6 +12,7 @@
     mc:Ignorable="d">
     <UserControl.Resources>
         <converter:ReplayTimeConverter x:Key="ReplayTimeConverter" />
+        <converter:IntToBoolConverter x:Key="IntToBoolConverter" />
     </UserControl.Resources>
     <GroupBox Header="Track details">
         <Grid>
@@ -457,6 +458,12 @@
                     Margin="3"
                     Click="ButtonShowOnline_Click"
                     Content="Show online" />
+                <Button
+                    Width="120"
+                    Margin="3"
+                    Click="ButtonShowObjects_Click"
+                    Content="Show objects"
+                    IsEnabled="{Binding ElementName=Control, Path=SelectedTrack.EmbeddedObjectsCount, Converter={StaticResource IntToBoolConverter}}" />
             </StackPanel>
 
         </Grid>

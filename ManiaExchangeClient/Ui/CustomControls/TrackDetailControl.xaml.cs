@@ -78,5 +78,14 @@ namespace ManiaExchangeClient.Ui.CustomControls
 
             Process.Start($"{trackPath}{id}");
         }
+
+        /// <summary>
+        /// Occurs when the user hits the show objects button
+        /// </summary>
+        private void ButtonShowObjects_Click(object sender, RoutedEventArgs e)
+        {
+            var id = SelectedTrack.TrackId;
+            new EmbeddedObjectWindow(id).ShowDialog();
+        }
     }
 }

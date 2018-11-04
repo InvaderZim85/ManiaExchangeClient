@@ -160,5 +160,24 @@ namespace ManiaExchangeClient.Business
 
             return await ExecuteAsync<TrackList>(request, endpoint.Path);
         }
+
+        /// <summary>
+        /// Loads the embedded objects of a track / map
+        /// </summary>
+        /// <param name="trackId">The id of the track</param>
+        /// <returns>The list with the objects</returns>
+        public async Task<List<EmbeddedObject>> LoadEmbeddedObjects(int trackId)
+        {
+            var endpoint = _settings.Endpoints.FirstOrDefault(f => f.Type == EndpointType.GetEmbeddedObjects);
+
+            if (endpoint == null)
+                throw new MissingEndpointException(EndpointType.GetEmbeddedObjects);
+
+            var request = new RestRequest("{id}");
+
+            request.AddUrlSegment("id", trackId);
+
+            return await ExecuteAsync<List<EmbeddedObject>>(request, endpoint.Path);
+        }
     }
 }

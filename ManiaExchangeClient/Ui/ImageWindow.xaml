@@ -13,7 +13,7 @@
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <mah:MetroWindow.DataContext>
-        <local:ShowImageViewModel />
+        <local:ImageWindowViewModel />
     </mah:MetroWindow.DataContext>
     <Grid>
         <Grid.RowDefinitions>

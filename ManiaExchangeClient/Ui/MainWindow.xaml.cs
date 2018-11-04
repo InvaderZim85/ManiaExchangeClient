@@ -30,6 +30,8 @@ namespace ManiaExchangeClient.Ui
         /// </summary>
         private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
         {
+            DetailControl.InitControl();
+
             if (DataContext is MainWindowViewModel viewModel)
             {
                 viewModel.InitViewModel(DialogCoordinator.Instance);

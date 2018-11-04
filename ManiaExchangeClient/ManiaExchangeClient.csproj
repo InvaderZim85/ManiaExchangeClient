@@ -88,6 +88,7 @@
     </Compile>
     <Compile Include="Business\RestManager.cs" />
     <Compile Include="CustomEvents.cs" />
+    <Compile Include="DataObjects\EmbeddedObject.cs" />
     <Compile Include="DataObjects\EndpointType.cs" />
     <Compile Include="DataObjects\Endpoint.cs" />
     <Compile Include="DataObjects\Environment.cs" />
@@ -99,6 +100,7 @@
     <Compile Include="Helper.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Ui\Converter\ContrastColorConverter.cs" />
+    <Compile Include="Ui\Converter\IntToBoolConverter.cs" />
     <Compile Include="Ui\Converter\ReplayTimeConverter.cs" />
     <Compile Include="Ui\CustomControls\Headline.xaml.cs">
       <DependentUpon>Headline.xaml</DependentUpon>
@@ -106,6 +108,10 @@
     <Compile Include="Ui\CustomControls\TrackDetailControl.xaml.cs">
       <DependentUpon>TrackDetailControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Ui\EmbeddedObjectWindow.xaml.cs">
+      <DependentUpon>EmbeddedObjectWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Ui\EmbeddedObjectWindowViewModel.cs" />
     <Compile Include="Ui\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
@@ -114,10 +120,10 @@
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Ui\SettingsWindowViewModel.cs" />
-    <Compile Include="Ui\ShowImage.xaml.cs">
-      <DependentUpon>ShowImage.xaml</DependentUpon>
+    <Compile Include="Ui\ImageWindow.xaml.cs">
+      <DependentUpon>ImageWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Ui\ShowImageViewModel.cs" />
+    <Compile Include="Ui\ImageWindowViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -161,6 +167,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Ui\EmbeddedObjectWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Ui\MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -169,7 +179,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Ui\ShowImage.xaml">
+    <Page Include="Ui\ImageWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

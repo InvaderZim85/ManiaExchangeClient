@@ -3,7 +3,7 @@ using WpfUtility.Services;
 
 namespace ManiaExchangeClient.Ui
 {
-    public class ShowImageViewModel: ObservableObject
+    public class ImageWindowViewModel: ObservableObject
     {
         /// <summary>
         /// Backing field for <see cref="ImageSource"/>

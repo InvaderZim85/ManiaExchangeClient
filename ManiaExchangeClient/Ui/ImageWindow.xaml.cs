@@ -67,7 +67,7 @@ namespace ManiaExchangeClient.Ui
         /// </summary>
         private void ShowImage_OnLoaded(object sender, RoutedEventArgs e)
         {
-            if (DataContext is ShowImageViewModel viewModel)
+            if (DataContext is ImageWindowViewModel viewModel)
                 viewModel.InitViewModel(PrepareImageSource(), _imageType);
         }
     }
