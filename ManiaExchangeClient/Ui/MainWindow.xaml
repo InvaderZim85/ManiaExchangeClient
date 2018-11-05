@@ -106,14 +106,14 @@
                         <DataGrid
                             Grid.Column="0"
                             Grid.ColumnSpan="3"
-                            AlternatingRowBackground="LightBlue"
                             AutoGenerateColumns="False"
                             CanUserAddRows="False"
                             CanUserDeleteRows="False"
-                            GridLinesVisibility="All"
+                            GridLinesVisibility="Horizontal"
                             IsReadOnly="True"
                             ItemsSource="{Binding TrackList}"
-                            SelectedItem="{Binding SelectedTrack}">
+                            SelectedItem="{Binding SelectedTrack}"
+                            Style="{StaticResource AzureDataGrid}">
                             <DataGrid.Columns>
                                 <DataGridTextColumn
                                     Width="*"

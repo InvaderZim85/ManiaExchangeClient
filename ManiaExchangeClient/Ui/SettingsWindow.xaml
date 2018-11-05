@@ -9,7 +9,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="Settings"
     Width="630"
-    Height="342.032"
+    Height="439.5"
     mah:DialogParticipation.Register="{Binding}"
     Loaded="SettingsWindow_OnLoaded"
     mc:Ignorable="d">
@@ -18,12 +18,53 @@
     </mah:MetroWindow.DataContext>
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <GroupBox
             Grid.Row="0"
+            Margin="3"
+            Header="Appearance">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Content="Theme:" />
+                <ComboBox
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Margin="3"
+                    ItemsSource="{Binding ThemeList}"
+                    SelectedItem="{Binding SelectedTheme}" />
+
+                <Label
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Content="Accent:" />
+                <ComboBox
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Margin="3"
+                    ItemsSource="{Binding AccentList}"
+                    SelectedItem="{Binding SelectedAccent}" />
+            </Grid>
+        </GroupBox>
+
+        <GroupBox
+            Grid.Row="1"
             Margin="3"
             Header="Endpoints">
             <Grid>
@@ -115,14 +156,13 @@
         </GroupBox>
 
         <StackPanel
-            Grid.Row="1"
+            Grid.Row="3"
             FlowDirection="RightToLeft"
             Orientation="Horizontal">
             <Button
-                Name="ButtonClose"
                 Width="75"
                 Margin="3"
-                Click="ButtonClose_OnClick"
+                Command="{Binding CloseCommand}"
                 Content="Close" />
             <Button
                 Width="75"

@@ -18,20 +18,15 @@ namespace ManiaExchangeClient.Ui
         }
 
         /// <summary>
-        /// Occurs when the user hits the close button
-        /// </summary>
-        private void ButtonClose_OnClick(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
-
-        /// <summary>
         /// Occurs when the form is loading
         /// </summary>
         private void SettingsWindow_OnLoaded(object sender, RoutedEventArgs e)
         {
             if (DataContext is SettingsWindowViewModel viewModel)
+            {
                 viewModel.InitViewModel(DialogCoordinator.Instance);
+                viewModel.CloseWindow += Close;
+            }
         }
     }
 }
