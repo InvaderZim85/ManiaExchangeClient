@@ -5,6 +5,7 @@
     xmlns:converter="clr-namespace:ManiaExchangeClient.Ui.Converter"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:ManiaExchangeClient.Ui.CustomControls"
+    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Name="Control"
     d:DesignHeight="700"

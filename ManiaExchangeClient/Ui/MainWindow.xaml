@@ -18,6 +18,102 @@
     <mah:MetroWindow.DataContext>
         <local:MainWindowViewModel />
     </mah:MetroWindow.DataContext>
+
+    <!--  Button  -->
+    <mah:MetroWindow.RightWindowCommands>
+        <mah:WindowCommands>
+            <ToggleButton
+                Content="Info"
+                Cursor="Hand"
+                IsChecked="{Binding ElementName=InfoFlyout, Path=IsOpen}" />
+        </mah:WindowCommands>
+    </mah:MetroWindow.RightWindowCommands>
+
+    <!--  Flyout  -->
+    <mah:MetroWindow.Flyouts>
+        <mah:FlyoutsControl>
+            <mah:Flyout
+                x:Name="InfoFlyout"
+                Width="400"
+                Header="Info"
+                Position="Right"
+                Theme="Dark">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Content="Title:" />
+                    <TextBox
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Margin="3"
+                        IsReadOnly="True"
+                        Text="{Binding Title}" />
+
+                    <Label
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Content="Version:" />
+                    <TextBox
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Margin="3"
+                        IsReadOnly="True"
+                        Text="{Binding Version}" />
+
+                    <Label
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        Content="Copyright:" />
+                    <TextBox
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        Margin="3"
+                        IsReadOnly="True"
+                        Text="{Binding Copyright}" />
+
+                    <Label
+                        Grid.Row="3"
+                        Grid.Column="0"
+                        Content="Build:" />
+                    <TextBox
+                        Grid.Row="3"
+                        Grid.Column="1"
+                        Margin="3"
+                        IsReadOnly="True"
+                        Text="{Binding BuildDate}" />
+
+                    <Label
+                        Grid.Row="4"
+                        Grid.Column="0"
+                        Content="Location:" />
+                    <TextBox
+                        Grid.Row="4"
+                        Grid.Column="1"
+                        Margin="3"
+                        IsReadOnly="True"
+                        Text="{Binding Location}" />
+
+
+                </Grid>
+            </mah:Flyout>
+        </mah:FlyoutsControl>
+    </mah:MetroWindow.Flyouts>
+
     <DockPanel LastChildFill="True">
         <!--  Main menu  -->
         <Menu DockPanel.Dock="Top">

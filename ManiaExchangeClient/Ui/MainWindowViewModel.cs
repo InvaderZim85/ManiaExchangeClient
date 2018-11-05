@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Windows.Input;
 using MahApps.Metro.Controls.Dialogs;
@@ -142,6 +143,77 @@ namespace ManiaExchangeClient.Ui
             set => SetField(ref _trackListHeader, value);
         }
 
+        // Flyout data
+        /// <summary>
+        /// Backing field for <see cref="Title"/>
+        /// </summary>
+        private string _title;
+
+        /// <summary>
+        /// Gets or sets the program title
+        /// </summary>
+        public string Title
+        {
+            get => _title;
+            set => SetField(ref _title, value);
+        }
+
+        /// <summary>
+        /// Backing field for <see cref="Version"/>
+        /// </summary>
+        private string _version;
+
+        /// <summary>
+        /// Gets or sets the version
+        /// </summary>
+        public string Version
+        {
+            get => _version;
+            set => SetField(ref _version, value);
+        }
+
+        /// <summary>
+        /// Backing field for <see cref="BuildDate"/>
+        /// </summary>
+        private string _buildDate;
+
+        /// <summary>
+        /// Gets or sets the build date
+        /// </summary>
+        public string BuildDate
+        {
+            get => _buildDate;
+            set => SetField(ref _buildDate, value);
+        }
+
+        /// <summary>
+        /// Backing field for <see cref="Location"/>
+        /// </summary>
+        private string _location;
+
+        /// <summary>
+        /// Gets or sets the location of the program
+        /// </summary>
+        public string Location
+        {
+            get => _location;
+            set => SetField(ref _location, value);
+        }
+
+        /// <summary>
+        /// Backing field for <see cref="Copyright"/>
+        /// </summary>
+        private string _copyright;
+
+        /// <summary>
+        /// Gets or sets the copyright information
+        /// </summary>
+        public string Copyright
+        {
+            get => _copyright;
+            set => SetField(ref _copyright, value);
+        }
+
         /// <summary>
         /// The command to search for a track
         /// </summary>
@@ -165,6 +237,26 @@ namespace ManiaExchangeClient.Ui
             EnvironmentList = new ObservableCollection<Environment>(Helper.EnvironmentList());
 
             SelectedEnvironment = EnvironmentList.FirstOrDefault(f => f.Id == 0);
+
+            InitInfoFlyout();
+        }
+
+        /// <summary>
+        /// Init the data for the flyout
+        /// </summary>
+        private void InitInfoFlyout()
+        {
+            var details = Assembly.GetExecutingAssembly().GetInformation();
+
+            if (details == null)
+                return;
+
+            Title = details.AssemblyTitle;
+            Version = details.AssemblyVersion;
+            Copyright = details.AssemblyCopyright;
+            Location = Helper.GetBaseFolder();
+            BuildDate = details.AssemblyDate.ToString("G");
+
         }
 
         /// <summary>

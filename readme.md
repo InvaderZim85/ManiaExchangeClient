@@ -67,11 +67,5 @@ Under *Endpoints* you will see the endpoints of the Mania Exchange API.
 > **NOTE**: Edit the endpoints only when you know what you are doing! :)
 
 ## To-Dos
-- ~~List of the latest tracks~~
-- ~~More filter options~~
+- Option to switch between short track infos (with image / thumbnail) and detailed informations
 - Option to download a track
-- ~~List of the replays~~
-- ~~Ability to cancel the track search~~
-- ~~List of embedded objects (if present)~~
-- ~~Option to open the track on Mania Exchange~~
-- ~~Theme and accent change~~

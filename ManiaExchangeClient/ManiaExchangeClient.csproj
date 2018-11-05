@@ -91,6 +91,7 @@
     </Compile>
     <Compile Include="Business\RestManager.cs" />
     <Compile Include="CustomEvents.cs" />
+    <Compile Include="DataObjects\AssemblyModel.cs" />
     <Compile Include="DataObjects\EmbeddedObject.cs" />
     <Compile Include="DataObjects\EndpointType.cs" />
     <Compile Include="DataObjects\Endpoint.cs" />
