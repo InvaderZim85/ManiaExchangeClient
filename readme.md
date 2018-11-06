@@ -6,11 +6,10 @@
 - [Mania Exchange - Client](#mania-exchange---client)
     - [General](#general)
     - [Using](#using)
-        - [Replay window](#replay-window)
-        - [Object window](#object-window)
-        - [Thumbnail window](#thumbnail-window)
-        - [Screenshot window](#screenshot-window)
+        - [The left side](#the-left-side)
+        - [The right side](#the-right-side)
     - [Settings](#settings)
+    - [Info](#info)
     - [To-Dos](#to-dos)
 
 <!-- /TOC -->
