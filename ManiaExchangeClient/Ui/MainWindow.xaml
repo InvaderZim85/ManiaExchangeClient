@@ -2,14 +2,16 @@
     x:Class="ManiaExchangeClient.Ui.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converter="clr-namespace:ManiaExchangeClient.Ui.Converter"
     xmlns:customControls="clr-namespace:ManiaExchangeClient.Ui.CustomControls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dataObjects="clr-namespace:ManiaExchangeClient.DataObjects"
     xmlns:local="clr-namespace:ManiaExchangeClient.Ui"
     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="Mania Exchange - Client"
     Width="1300"
-    Height="820"
+    Height="860"
     mah:DialogParticipation.Register="{Binding}"
     Icon="../ManiaExchangeClientIcon.ico"
     Loaded="MainWindow_OnLoaded"
@@ -18,6 +20,10 @@
     <mah:MetroWindow.DataContext>
         <local:MainWindowViewModel />
     </mah:MetroWindow.DataContext>
+
+    <mah:MetroWindow.Resources>
+        <converter:IntToBoolConverter x:Key="IntToBoolConverter" />
+    </mah:MetroWindow.Resources>
 
     <!--  Button  -->
     <mah:MetroWindow.RightWindowCommands>
@@ -142,19 +148,27 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
 
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
                     <TextBox
+                        Grid.Row="0"
                         Grid.Column="0"
                         Margin="3"
                         mah:TextBoxHelper.Watermark="Track name"
-                        Text="{Binding TrackName}" />
+                        Text="{Binding TrackName, UpdateSourceTrigger=PropertyChanged}" />
 
                     <TextBox
+                        Grid.Row="0"
                         Grid.Column="1"
                         Margin="3"
                         mah:TextBoxHelper.Watermark="Author"
-                        Text="{Binding Author}" />
+                        Text="{Binding Author, UpdateSourceTrigger=PropertyChanged}" />
 
                     <ComboBox
+                        Grid.Row="0"
                         Grid.Column="2"
                         Margin="3"
                         mah:TextBoxHelper.Watermark="Environment"
@@ -162,11 +176,70 @@
                         SelectedItem="{Binding SelectedEnvironment}" />
 
                     <Button
+                        Grid.Row="0"
                         Grid.Column="3"
                         Width="75"
                         Margin="3"
                         Command="{Binding SearchCommand}"
-                        Content="Search" />
+                        CommandParameter="{x:Static dataObjects:SearchType.Filter}"
+                        Content="Search"
+                        IsEnabled="{Binding SearchButtonEnabled}" />
+
+                    <Grid
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Button
+                            Grid.Column="0"
+                            Margin="3"
+                            Command="{Binding SearchCommand}"
+                            CommandParameter="{x:Static dataObjects:SearchType.LatestTracks}"
+                            Content="Latest tracks" />
+
+                        <Button
+                            Grid.Column="1"
+                            Margin="3"
+                            Command="{Binding SearchCommand}"
+                            CommandParameter="{x:Static dataObjects:SearchType.RecentlyAwarded}"
+                            Content="Recently awarded" />
+
+                        <Button
+                            Grid.Column="2"
+                            Margin="3"
+                            Command="{Binding SearchCommand}"
+                            CommandParameter="{x:Static dataObjects:SearchType.BestOfTheWeek}"
+                            Content="Best of the week" />
+
+                        <Button
+                            Grid.Column="3"
+                            Margin="3"
+                            Command="{Binding SearchCommand}"
+                            CommandParameter="{x:Static dataObjects:SearchType.BestOfTheMonth}"
+                            Content="Best of the month" />
+
+                        <Button
+                            Grid.Column="4"
+                            Margin="3"
+                            Command="{Binding SearchCommand}"
+                            CommandParameter="{x:Static dataObjects:SearchType.CompetitiveTracksOfTheWeek}"
+                            Content="Competitive tracks of the week" />
+
+                        <Button
+                            Grid.Column="5"
+                            Margin="3"
+                            Command="{Binding SearchCommand}"
+                            CommandParameter="{x:Static dataObjects:SearchType.CompetitiveTracksOfTheMonth}"
+                            Content="Competitive tracks of the month" />
+                    </Grid>
                 </Grid>
             </GroupBox>
 
@@ -213,12 +286,12 @@
                             <DataGrid.Columns>
                                 <DataGridTextColumn
                                     Width="*"
+                                    Binding="{Binding AuthorLogin}"
+                                    Header="Author" />
+                                <DataGridTextColumn
+                                    Width="*"
                                     Binding="{Binding Name}"
                                     Header="Name" />
-                                <DataGridTextColumn
-                                    Width="Auto"
-                                    Binding="{Binding UploadedAt, ConverterCulture='de-DE', StringFormat=G}"
-                                    Header="Uploaded" />
                                 <DataGridTextColumn
                                     Width="Auto"
                                     Binding="{Binding AwardCount}"
@@ -238,13 +311,31 @@
                     Width="3"
                     HorizontalAlignment="Stretch" />
 
-                <customControls:TrackDetailControl
-                    x:Name="DetailControl"
+                <TabControl
+                    Name="TabControl"
                     Grid.Row="2"
                     Grid.Column="2"
                     Margin="3"
                     IsEnabled="{Binding DetailEnabled}"
-                    SelectedTrack="{Binding SelectedTrack}" />
+                    SelectionChanged="TabControl_SelectionChanged">
+                    <TabItem Header="Track">
+                        <customControls:TrackDetailControl
+                            ScreenshotPath="{Binding ScreenshotPath}"
+                            SelectedTrack="{Binding SelectedTrack}"
+                            ShowScreenshotNoImage="{Binding ShowScreenshotNoImage}"
+                            ShowThumbnailNoImage="{Binding ShowThumbnailNoImage}"
+                            ThumbnailPath="{Binding ThumbnailPath}" />
+                    </TabItem>
+                    <TabItem Header="Full details">
+                        <customControls:TrackDetailFullControl Margin="3" SelectedTrack="{Binding SelectedTrack}" />
+                    </TabItem>
+                    <TabItem Header="Replays" IsEnabled="{Binding SelectedTrack.ReplayCount, Converter={StaticResource IntToBoolConverter}}">
+                        <customControls:ReplayControl x:Name="ReplayControl" Margin="3" />
+                    </TabItem>
+                    <TabItem Header="Embedded objects" IsEnabled="{Binding SelectedTrack.EmbeddedObjectsCount, Converter={StaticResource IntToBoolConverter}}">
+                        <customControls:ObjectControl x:Name="ObjectControl" Margin="3" />
+                    </TabItem>
+                </TabControl>
             </Grid>
         </Grid>
 

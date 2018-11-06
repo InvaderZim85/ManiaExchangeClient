@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-using System.Linq;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using ManiaExchangeClient.DataObjects;
 
@@ -12,24 +10,11 @@ namespace ManiaExchangeClient.Ui.CustomControls
     public partial class TrackDetailControl : UserControl
     {
         /// <summary>
-        /// Contains the settings
-        /// </summary>
-        private SettingsModel _settings;
-
-        /// <summary>
         /// Creates a new instance of the <see cref="TrackDetailControl"/>
         /// </summary>
         public TrackDetailControl()
         {
             InitializeComponent();
-        }
-
-        /// <summary>
-        /// Inits the control
-        /// </summary>
-        public void InitControl()
-        {
-            _settings = Helper.LoadSettings();
         }
 
         /// <summary>
@@ -43,58 +28,92 @@ namespace ManiaExchangeClient.Ui.CustomControls
         /// </summary>
         public Track SelectedTrack
         {
-            get => (Track) GetValue(SelectedTrackProperty);
+            get => (Track)GetValue(SelectedTrackProperty);
             set => SetValue(SelectedTrackProperty, value);
         }
 
         /// <summary>
-        /// Occurs when the user hits the show thumbnail button
+        /// The dependency property for <see cref="ThumbnailPath"/>
         /// </summary>
-        private void ButtonShowThumbnail_Click(object sender, RoutedEventArgs e)
+        public static readonly DependencyProperty ThumbnailPathProperty = DependencyProperty.Register(
+            nameof(ThumbnailPath), typeof(string), typeof(TrackDetailControl), new PropertyMetadata(default(string)));
+
+        /// <summary>
+        /// Gets or sets the thumbnail path
+        /// </summary>
+        public string ThumbnailPath
         {
-            var id = SelectedTrack.TrackId;
-            new ShowImage(id, ImageType.Thumbnail).ShowDialog();
+            get => (string) GetValue(ThumbnailPathProperty);
+            set => SetValue(ThumbnailPathProperty, value);
         }
 
         /// <summary>
-        /// Occurs when the user hits the show screenshot button
+        /// The dependency property for <see cref="ScreenshotPath"/>
         /// </summary>
-        private void ButtonShowScreenshot_Click(object sender, RoutedEventArgs e)
+        public static readonly DependencyProperty ScreenshotPathProperty = DependencyProperty.Register(
+            nameof(ScreenshotPath), typeof(string), typeof(TrackDetailControl), new PropertyMetadata(default(string)));
+
+        /// <summary>
+        /// Gets or sets the path of the screenshot
+        /// </summary>
+        public string ScreenshotPath
         {
-            var id = SelectedTrack.TrackId;
-            new ShowImage(id, ImageType.Screenshot).ShowDialog();
+            get => (string) GetValue(ScreenshotPathProperty);
+            set => SetValue(ScreenshotPathProperty, value);
         }
 
         /// <summary>
-        /// Occurs when the user hits the show online button
+        /// The dependency property for <see cref="ShowThumbnailNoImage"/>
         /// </summary>
-        private void ButtonShowOnline_Click(object sender, RoutedEventArgs e)
+        public static readonly DependencyProperty ShowThumbnailNoImageProperty = DependencyProperty.Register(
+            nameof(ShowThumbnailNoImage), typeof(bool), typeof(TrackDetailControl), new PropertyMetadata(default(bool)));
+
+        /// <summary>
+        /// Gets or sets the value which indicates if a message should be shown instead the thumbnail
+        /// </summary>
+        public bool ShowThumbnailNoImage
         {
-            var id = SelectedTrack.TrackId;
-            var trackPath = _settings?.Endpoints.FirstOrDefault(f => f.Type == EndpointType.TrackPage)?.Path ?? "";
-
-            if (string.IsNullOrEmpty(trackPath))
-                return;
-
-            Process.Start($"{trackPath}{id}");
+            get => (bool) GetValue(ShowThumbnailNoImageProperty);
+            set => SetValue(ShowThumbnailNoImageProperty, value);
         }
 
         /// <summary>
-        /// Occurs when the user hits the show objects button
+        /// The dependency property for <see cref="ShowScreenshotNoImage"/>
         /// </summary>
-        private void ButtonShowObjects_Click(object sender, RoutedEventArgs e)
+        public static readonly DependencyProperty ShowScreenshotNoImageProperty = DependencyProperty.Register(
+            nameof(ShowScreenshotNoImage), typeof(bool), typeof(TrackDetailControl), new PropertyMetadata(default(bool)));
+
+        /// <summary>
+        /// Gets or sets the value which indicates if a message should be shown instead the screenshot
+        /// </summary>
+        public bool ShowScreenshotNoImage
         {
-            var id = SelectedTrack.TrackId;
-            new EmbeddedObjectWindow(id).ShowDialog();
+            get => (bool) GetValue(ShowScreenshotNoImageProperty);
+            set => SetValue(ShowScreenshotNoImageProperty, value);
         }
 
         /// <summary>
-        /// Occurs when the user hits the show replay buttons
+        /// Occurs when the index was changed
         /// </summary>
-        private void ButtonShowReplays_Click(object sender, RoutedEventArgs e)
+        private void FlipViewTest_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var id = SelectedTrack.TrackId;
-            new ReplayWindow(id).ShowDialog();
+            switch (FlipView.SelectedIndex)
+            {
+                case 0:
+                    FlipView.BannerText = "Thumbnail";
+                    break;
+                case 1:
+                    FlipView.BannerText = "Screenshot";
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Occurs when the track id was changed
+        /// </summary>
+        private void TextBoxBase_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            FlipView.SelectedIndex = 0;
         }
     }
 }

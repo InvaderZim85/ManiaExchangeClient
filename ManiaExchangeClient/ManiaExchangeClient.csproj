@@ -99,6 +99,7 @@
     <Compile Include="DataObjects\ImageType.cs" />
     <Compile Include="DataObjects\MissingEndpointException.cs" />
     <Compile Include="DataObjects\Replay.cs" />
+    <Compile Include="DataObjects\SearchType.cs" />
     <Compile Include="DataObjects\SettingsModel.cs" />
     <Compile Include="DataObjects\Track.cs" />
     <Compile Include="DataObjects\TrackList.cs" />
@@ -110,29 +111,28 @@
     <Compile Include="Ui\CustomControls\Headline.xaml.cs">
       <DependentUpon>Headline.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Ui\CustomControls\ObjectControl.xaml.cs">
+      <DependentUpon>ObjectControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Ui\CustomControls\ObjectControlViewModel.cs" />
+    <Compile Include="Ui\CustomControls\ReplayControl.xaml.cs">
+      <DependentUpon>ReplayControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Ui\CustomControls\ReplayControlViewModel.cs" />
     <Compile Include="Ui\CustomControls\TrackDetailControl.xaml.cs">
       <DependentUpon>TrackDetailControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Ui\EmbeddedObjectWindow.xaml.cs">
-      <DependentUpon>EmbeddedObjectWindow.xaml</DependentUpon>
+    <Compile Include="Ui\CustomControls\TrackDetailFullControl.xaml.cs">
+      <DependentUpon>TrackDetailFullControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Ui\EmbeddedObjectWindowViewModel.cs" />
     <Compile Include="Ui\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Ui\MainWindowViewModel.cs" />
-    <Compile Include="Ui\ReplayWindow.xaml.cs">
-      <DependentUpon>ReplayWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Ui\ReplayWindowViewModel.cs" />
     <Compile Include="Ui\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Ui\SettingsWindowViewModel.cs" />
-    <Compile Include="Ui\ImageWindow.xaml.cs">
-      <DependentUpon>ImageWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Ui\ImageWindowViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -172,11 +172,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Ui\CustomControls\ObjectControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Ui\CustomControls\ReplayControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Ui\CustomControls\TrackDetailControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Ui\EmbeddedObjectWindow.xaml">
+    <Page Include="Ui\CustomControls\TrackDetailFullControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -184,21 +192,18 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Ui\ReplayWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Ui\SettingsWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Ui\ImageWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="ManiaExchangeClientIcon.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="NoImage.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

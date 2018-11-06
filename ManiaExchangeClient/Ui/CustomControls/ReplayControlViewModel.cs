@@ -4,9 +4,9 @@ using ManiaExchangeClient.Business;
 using ManiaExchangeClient.DataObjects;
 using WpfUtility.Services;
 
-namespace ManiaExchangeClient.Ui
+namespace ManiaExchangeClient.Ui.CustomControls
 {
-    public class ReplayWindowViewModel : ObservableObject
+    class ReplayControlViewModel : ObservableObject
     {
         /// <summary>
         /// Contains the dialog coordinator
@@ -55,13 +55,20 @@ namespace ManiaExchangeClient.Ui
         /// Init the view model
         /// </summary>
         /// <param name="dialogCoordinator">The dialog coordinator</param>
-        /// <param name="trackId">The track id</param>
-        public void InitViewModel(IDialogCoordinator dialogCoordinator, int trackId)
+        public void InitViewModel(IDialogCoordinator dialogCoordinator)
         {
             _dialogCoordinator = dialogCoordinator;
 
             _restManager = new RestManager();
 
+        }
+
+        /// <summary>
+        /// Loads the replays for the given track id
+        /// </summary>
+        /// <param name="trackId">The id of the track</param>
+        public void LoadReplays(int trackId)
+        {
             _trackId = trackId;
 
             LoadObjects();

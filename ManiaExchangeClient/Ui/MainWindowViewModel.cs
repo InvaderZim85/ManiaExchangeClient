@@ -13,9 +13,9 @@ namespace ManiaExchangeClient.Ui
     public class MainWindowViewModel : ObservableObject
     {
         /// <summary>
-        /// Event which occurs when the settings were changed
+        /// Occurs when the user selects another track
         /// </summary>
-        public event CustomEvents.InfoEvent SettingsReloaded;
+        public event CustomEvents.InfoEvent SelectionChanged;
 
         /// <summary>
         /// Contains the dialog coordinator
@@ -28,6 +28,11 @@ namespace ManiaExchangeClient.Ui
         private RestManager _restManager;
 
         /// <summary>
+        /// Contains the settings
+        /// </summary>
+        private SettingsModel _settings;
+
+        /// <summary>
         /// Backing field for <see cref="Author"/>
         /// </summary>
         private string _author;
@@ -38,7 +43,29 @@ namespace ManiaExchangeClient.Ui
         public string Author
         {
             get => _author;
-            set => SetField(ref _author, value);
+            set
+            {
+                SetField(ref _author, value);
+                SearchButtonEnabled = !string.IsNullOrEmpty(TrackName) || !string.IsNullOrEmpty(Author);
+            }
+        }
+
+        /// <summary>
+        /// Backing field for <see cref="TrackName"/>
+        /// </summary>
+        private string _trackName;
+
+        /// <summary>
+        /// Gets or sets the track name
+        /// </summary>
+        public string TrackName
+        {
+            get => _trackName;
+            set
+            {
+                SetField(ref _trackName, value);
+                SearchButtonEnabled = !string.IsNullOrEmpty(TrackName) || !string.IsNullOrEmpty(Author);
+            }
         }
 
         /// <summary>
@@ -68,8 +95,13 @@ namespace ManiaExchangeClient.Ui
             get => _selectedTrack;
             set
             {
-                SetField(ref _selectedTrack, value);
                 DetailEnabled = value != null;
+
+                if (SetField(ref _selectedTrack, value))
+                {
+                    SelectionChanged?.Invoke();
+                    SetImagePath();
+                }
             }
         }
 
@@ -113,20 +145,6 @@ namespace ManiaExchangeClient.Ui
         {
             get => _selectedEnvironment;
             set => SetField(ref _selectedEnvironment, value);
-        }
-
-        /// <summary>
-        /// Backing field for <see cref="TrackName"/>
-        /// </summary>
-        private string _trackName;
-
-        /// <summary>
-        /// Gets or sets the track name
-        /// </summary>
-        public string TrackName
-        {
-            get => _trackName;
-            set => SetField(ref _trackName, value);
         }
 
         /// <summary>
@@ -215,9 +233,79 @@ namespace ManiaExchangeClient.Ui
         }
 
         /// <summary>
+        /// Backing field for <see cref="SearchButtonEnabled"/>
+        /// </summary>
+        private bool _searchButtonEnabled;
+
+        /// <summary>
+        /// Gets or sets the value which indicates if the search button is enabled
+        /// </summary>
+        public bool SearchButtonEnabled
+        {
+            get => _searchButtonEnabled;
+            set => SetField(ref _searchButtonEnabled, value);
+        }
+
+        /// <summary>
+        /// Backing field for <see cref="ThumbnailPath"/>
+        /// </summary>
+        private string _thumbnailPath;
+
+        /// <summary>
+        /// Gets or sets the path of the thumbnail
+        /// </summary>
+        public string ThumbnailPath
+        {
+            get => _thumbnailPath;
+            set => SetField(ref _thumbnailPath, value);
+        }
+
+        /// <summary>
+        /// Backing field for <see cref="ScreenshotPath"/>
+        /// </summary>
+        private string _screenshotPath;
+
+        /// <summary>
+        /// Gets or sets the path of the screenshot
+        /// </summary>
+        public string ScreenshotPath
+        {
+            get => _screenshotPath;
+            set => SetField(ref _screenshotPath, value);
+        }
+
+        /// <summary>
+        /// Backing field for <see cref="ShowScreenshotNoImage"/>
+        /// </summary>
+        private bool _showScreenshotNoImage;
+
+        /// <summary>
+        /// Gets or sets the value which indicates if a message should be shown instead of the screenshot
+        /// </summary>
+        public bool ShowScreenshotNoImage
+        {
+            get => _showScreenshotNoImage;
+            set => SetField(ref _showScreenshotNoImage, value);
+        }
+
+        /// <summary>
+        /// Backing field for <see cref="ShowThumbnailNoImage"/>
+        /// </summary>
+        private bool _showThumbnailNoImage;
+
+        /// <summary>
+        /// Gets or sets the value which indicates if a message should be shown instead of the thumbnail
+        /// </summary>
+        public bool ShowThumbnailNoImage
+        {
+            get => _showThumbnailNoImage;
+            set => SetField(ref _showThumbnailNoImage, value);
+        }
+
+        /// <summary>
         /// The command to search for a track
         /// </summary>
-        public ICommand SearchCommand => new DelegateCommand(SearchTracks);
+        public ICommand SearchCommand => new RelayCommand<SearchType>(SearchTracks);
 
         /// <summary>
         /// The command to open the settings
@@ -260,6 +348,53 @@ namespace ManiaExchangeClient.Ui
         }
 
         /// <summary>
+        /// Gets the path of the images
+        /// </summary>
+        private void SetImagePath()
+        {
+            if (SelectedTrack == null)
+            {
+                ThumbnailPath =
+                    PrepareImageSource(ImageType.Thumbnail, 0);
+                ScreenshotPath =
+                    PrepareImageSource(ImageType.Screenshot, 0);
+
+                ShowScreenshotNoImage = true;
+                ShowThumbnailNoImage = true;
+                return;
+            }
+
+            ThumbnailPath =
+                PrepareImageSource(ImageType.Thumbnail, SelectedTrack.HasThumbnail ? SelectedTrack.TrackId : 0);
+            ScreenshotPath =
+                PrepareImageSource(ImageType.Screenshot, SelectedTrack.HasScreenshot ? SelectedTrack.TrackId : 0);
+
+            ShowThumbnailNoImage = !SelectedTrack.HasThumbnail;
+            ShowScreenshotNoImage = !SelectedTrack.HasScreenshot;
+        }
+
+        /// <summary>
+        /// Prepares the image source
+        /// </summary>
+        /// <returns>The image source</returns>
+        private string PrepareImageSource(ImageType imageType, int trackId)
+        {
+            if (_settings == null)
+                _settings = Helper.LoadSettings();
+
+            if (imageType == ImageType.Thumbnail)
+            {
+                var thumbnailPath = _settings.Endpoints.FirstOrDefault(f => f.Type == EndpointType.Thumbnail);
+                return thumbnailPath == null ? "" : $"{thumbnailPath.Path}{trackId}";
+            }
+            else
+            {
+                var screenshotPath = _settings.Endpoints.FirstOrDefault(f => f.Type == EndpointType.Screenshot);
+                return screenshotPath == null ? "" : $"{screenshotPath.Path}{trackId}";
+            }
+        }
+
+        /// <summary>
         /// Shows the settings dialog
         /// </summary>
         private void ShowSettings()
@@ -267,24 +402,26 @@ namespace ManiaExchangeClient.Ui
             var dialog = new SettingsWindow();
             dialog.ShowDialog();
 
-            SettingsReloaded?.Invoke();
             _restManager = new RestManager();
+
+            _settings = Helper.LoadSettings();
         }
 
         /// <summary>
         /// Searchs for the tracks
         /// </summary>
-        private async void SearchTracks()
+        /// <param name="searchType">The search type</param>
+        private async void SearchTracks(SearchType searchType)
         {
             var cancellationToken = new CancellationTokenSource();
-            var controller = await _dialogCoordinator.ShowProgressAsync(this, "Loading - Plase wait...",
-                GetProgressMessage(), true);
+            var controller = await _dialogCoordinator.ShowProgressAsync(this, "Loading - Please wait...",
+                GetProgressMessage(searchType), true);
 
             controller.Canceled += (o, e) => cancellationToken.Cancel();
 
             controller.SetIndeterminate();
 
-            var data = await _restManager.LoadTracks(Author, TrackName, SelectedEnvironment, cancellationToken);
+            var data = await _restManager.LoadTracks(searchType, Author, TrackName, SelectedEnvironment, cancellationToken);
 
             if (data != null)
                 TrackList = new ObservableCollection<Track>(data);
@@ -297,19 +434,40 @@ namespace ManiaExchangeClient.Ui
         /// <summary>
         /// Gets the progress message
         /// </summary>
+        /// <param name="searchType">The search type</param>
         /// <returns>The message for the progress dialog</returns>
-        private string GetProgressMessage()
+        private string GetProgressMessage(SearchType searchType)
         {
             var msg = "Values:";
 
-            if (!string.IsNullOrEmpty(Author))
-                msg += $"\r\n- Author: {Author}";
+            switch (searchType)
+            {
+                case SearchType.Filter:
+                    if (!string.IsNullOrEmpty(Author))
+                        msg += $"\r\n- Author: {Author}";
 
-            if (!string.IsNullOrEmpty(TrackName))
-                msg += $"\r\n- Track name: {TrackName}";
-
-            if (string.IsNullOrEmpty(Author) && string.IsNullOrEmpty(TrackName))
-                msg += "\r\n- Latest 10 tracks.";
+                    if (!string.IsNullOrEmpty(TrackName))
+                        msg += $"\r\n- Track name: {TrackName}";
+                    break;
+                case SearchType.LatestTracks:
+                    msg += "\r\n- Latest 10 tracks";
+                    break;
+                case SearchType.RecentlyAwarded:
+                    msg += "\r\n- Recently awarded tracks (10 entries)";
+                    break;
+                case SearchType.BestOfTheWeek:
+                    msg += "\r\n- Best of the week (10 entries)";
+                    break;
+                case SearchType.BestOfTheMonth:
+                    msg += "\r\n- Best of the month (10 entries)";
+                    break;
+                case SearchType.CompetitiveTracksOfTheWeek:
+                    msg += "\r\n- Best competitive tracks of the week (10 entries)";
+                    break;
+                case SearchType.CompetitiveTracksOfTheMonth:
+                    msg += "\r\n- Best competitive tracks of the month (10 entries)";
+                    break;
+            }
 
             if (SelectedEnvironment?.Id != 0)
                 msg += $"\r\n- Environment: {SelectedEnvironment?.Name}";

@@ -26,39 +26,43 @@ The usage of the program is very straight forward. You can search for tracks by 
 - Author
 - Environment
 
-> *Note*: If you leave the track name and the author blank the latest 10 tracks will be loaded
+Or you use one of the predefined filters:
+- Latest tracks
+- Recently awarded
+- Best of the week
+- Best of the month
+- Competitive tracks of the week
+- Competitive tracks of the month
+
+> *Note*: If you use one of the predefined filters. Only 10 entries will be loaded and it seems that the filters not working as the filters on the website. So it can be that the results are different from the results of the website.
 
 ![Searching](Images/002.png)
 
 > *Note*: The search process needs some seconds. I've added a timeout to prevent endless searching.
 
-![Overview](Images/003.png)
 
-On the left side you find a list with all tracks / maps of the author. When you select an entry the details will be shown on the right side.
 
-On the right bottom you will find the following buttons:
-- Show replays: Opens a new window with a list of the replays (only available if the track has replays)
-- Show objects: Opens a new window with a list of the used objects (only available if the track has custom objects)
-- Show online: Opens the track on Mania Exchange in your default browser
-- Show thumbnail: Opens a window with the thumbnail (only available if the track has a thumbnail)
-- Show screenshot: Opens a window with the screenshot (only available if the track has a screenshot)
+### The left side
+On the left side you can find a list of the tracks with some informations. If you select a track more informations will be shown on the right side.
 
-### Replay window
-![Replays](Images/004.png)
+### The right side
+On the left side you can find further informations of the selected track. The informations are grouped in four different sections:
+1. **Track**: Here you can find the basic informations like the name, the environment, the length, and so on. And you can see the thumbnail and screenshot of the track.
+   ![Details](Images/003.png)
 
-### Object window
-![Objects](Images/005.png)
+2. **Full details**: Here you can find more details about the selected track like the mood, the version of ManiaPlanet, and so on.
+   ![Full details](Images/004.png)
 
-### Thumbnail window
-![Thumbnail](Images/006.png)
+3. **Replays**: Here you can find the list of replays with the time and the name of the driver (only enabled when replays available).
+   ![Replay](Images/005.png)
 
-### Screenshot window
-![Screenshot](Images/007.png)
+4. **Embedded objects**: Here you can find a list of all objects which were used in the track (only enabled when embedded objects were used).
+   ![Objects](Images/006.png)
 
 ## Settings
 When you click on "Program > Settings" the settings window will be displayed. Here can you find the settings of the program.
 
-![Settings](Images/008.png)
+![Settings](Images/009.png)
 
 Under *Appearance* you can change the theme and the accent color of the program.
 
@@ -66,6 +70,10 @@ Under *Endpoints* you will see the endpoints of the Mania Exchange API.
 
 > **NOTE**: Edit the endpoints only when you know what you are doing! :)
 
+## Info
+When you click on the button "Info" (top right of the window) you will find some short informations about the program.
+
+![Info](Images/008.png)
+
 ## To-Dos
-- Option to switch between short track infos (with image / thumbnail) and detailed informations
 - Option to download a track

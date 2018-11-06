@@ -4,9 +4,9 @@ using ManiaExchangeClient.Business;
 using ManiaExchangeClient.DataObjects;
 using WpfUtility.Services;
 
-namespace ManiaExchangeClient.Ui
+namespace ManiaExchangeClient.Ui.CustomControls
 {
-    public class EmbeddedObjectWindowViewModel : ObservableObject
+    class ObjectControlViewModel : ObservableObject
     {
         /// <summary>
         /// Contains the dialog coordinator
@@ -56,12 +56,19 @@ namespace ManiaExchangeClient.Ui
         /// </summary>
         /// <param name="dialogCoordinator">The dialog coordinator</param>
         /// <param name="trackId">The track id</param>
-        public void InitViewModel(IDialogCoordinator dialogCoordinator, int trackId)
+        public void InitViewModel(IDialogCoordinator dialogCoordinator)
         {
             _dialogCoordinator = dialogCoordinator;
 
             _restManager = new RestManager();
+        }
 
+        /// <summary>
+        /// Loads the embedded objects for the given track id
+        /// </summary>
+        /// <param name="trackId">The track id</param>
+        public void LoadObjects(int trackId)
+        {
             _trackId = trackId;
 
             LoadObjects();
@@ -72,7 +79,7 @@ namespace ManiaExchangeClient.Ui
         /// </summary>
         private async void LoadObjects()
         {
-                var controller = await _dialogCoordinator.ShowProgressAsync(this, "Loading embedded objects - Plase wait...", "");
+            var controller = await _dialogCoordinator.ShowProgressAsync(this, "Loading embedded objects - Please wait...", "");
             controller.SetIndeterminate();
 
             var data = await _restManager.LoadEmbeddedObjects(_trackId);

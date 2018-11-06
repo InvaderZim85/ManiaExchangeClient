@@ -74,21 +74,23 @@ namespace ManiaExchangeClient.Business
         /// <summary>
         /// Loads the tracks of the given author
         /// </summary>
+        /// <param name="searchType">The search type</param>
         /// <param name="author">The author</param>
-        /// <param name="trackname">The name of the track</param>
+        /// <param name="trackName">The name of the track</param>
         /// <param name="environment">The selected environment</param>
         /// <param name="cancellationToken">The cancellation token</param>
         /// <returns>The list of tracks</returns>
-        public async Task<List<Track>> LoadTracks(string author, string trackname, Environment environment, CancellationTokenSource cancellationToken)
+        public async Task<List<Track>> LoadTracks(SearchType searchType, string author, string trackName, Environment environment, CancellationTokenSource cancellationToken)
         {
             var limit = 50;
 
-            var showLatest = false;
-            if (string.IsNullOrEmpty(author) && string.IsNullOrEmpty(trackname))
+            if (string.IsNullOrEmpty(author) && string.IsNullOrEmpty(trackName) && searchType == SearchType.Filter)
             {
-                limit = 10;
-                showLatest = true;
+                searchType = SearchType.LatestTracks;
             }
+
+            if (searchType != SearchType.Filter)
+                limit = 10;
 
             var page = 1;
 
@@ -97,14 +99,14 @@ namespace ManiaExchangeClient.Business
             if (cancellationToken.IsCancellationRequested)
                 return new List<Track>();
 
-            var initData = await LoadTracks(author, trackname, environment, limit, page, showLatest);
+            var initData = await LoadTracks(searchType, author, trackName, environment, limit, page);
 
             if (initData == null)
                 return result;
 
             result.AddRange(initData.Results);
 
-            if (showLatest)
+            if (searchType != SearchType.Filter)
                 return result;
 
             var maxEntries = Math.Round(initData.TotalItemCount / (double)limit);
@@ -114,7 +116,7 @@ namespace ManiaExchangeClient.Business
                 if (cancellationToken.IsCancellationRequested)
                     return result;
 
-                var data = await LoadTracks(author, trackname, environment, limit, page);
+                var data = await LoadTracks(searchType, author, trackName, environment, limit, page);
 
                 if (data != null)
                     result.AddRange(data.Results);
@@ -126,14 +128,15 @@ namespace ManiaExchangeClient.Business
         /// <summary>
         /// Loads a list of tracks of the author
         /// </summary>
+        /// <param name="searchType">The search type</param>
         /// <param name="author">The author name</param>
-        /// <param name="trackname">The name of the track</param>
+        /// <param name="trackName">The name of the track</param>
         /// <param name="environment">The selected environment</param>
         /// <param name="limit">The limit of results per page</param>
         /// <param name="page">The page</param>
         /// <param name="showLatest">true when only the latest tracks should be shown, otherwise false</param>
         /// <returns>The list with the tracks</returns>
-        private async Task<TrackList> LoadTracks(string author, string trackname, Environment environment, int limit, int page, bool showLatest = false)
+        private async Task<TrackList> LoadTracks(SearchType searchType, string author, string trackName, Environment environment, int limit, int page)
         {
             // Step 0: Get the endpoint
             var endpoint = GetEndpoint(EndpointType.TrackSearch);
@@ -147,21 +150,22 @@ namespace ManiaExchangeClient.Business
             request.AddParameter("api", "on");
             request.AddParameter("limit", limit);
 
-            if (showLatest)
+            if (searchType != SearchType.Filter)
             {
-                request.AddParameter("mode", 2);
+                request.AddParameter("mode", (int)searchType);
             }
             else
             {
                 if (!string.IsNullOrEmpty(author))
                     request.AddParameter("author", author);
-                if (!string.IsNullOrEmpty(trackname))
-                    request.AddParameter("trackname", trackname);
+                if (!string.IsNullOrEmpty(trackName))
+                    request.AddParameter("trackname", trackName);
+
+                request.AddParameter("page", page);
             }
 
             if (environment.Id != 0)
                 request.AddParameter("environments", environment.Id);
-            request.AddParameter("page", page);
 
             return await ExecuteAsync<TrackList>(request, endpoint.Path);
         }
