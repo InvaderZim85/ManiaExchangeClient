@@ -11,6 +11,7 @@
     Width="630"
     Height="440"
     mah:DialogParticipation.Register="{Binding}"
+    Closing="SettingsWindow_OnClosing"
     Loaded="SettingsWindow_OnLoaded"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">

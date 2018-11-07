@@ -18,6 +18,11 @@ namespace ManiaExchangeClient.Ui
         public event CustomEvents.InfoEvent SelectionChanged;
 
         /// <summary>
+        /// Occurs when the user starts a new search
+        /// </summary>
+        public event CustomEvents.InfoEvent SearchStarted;
+
+        /// <summary>
         /// Contains the dialog coordinator
         /// </summary>
         private IDialogCoordinator _dialogCoordinator;
@@ -413,6 +418,8 @@ namespace ManiaExchangeClient.Ui
         /// <param name="searchType">The search type</param>
         private async void SearchTracks(SearchType searchType)
         {
+            SearchStarted?.Invoke();
+
             var cancellationToken = new CancellationTokenSource();
             var controller = await _dialogCoordinator.ShowProgressAsync(this, "Loading - Please wait...",
                 GetProgressMessage(searchType), true);

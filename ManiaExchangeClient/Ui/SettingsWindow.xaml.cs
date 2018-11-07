@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.ComponentModel;
+using System.Windows;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 
@@ -27,6 +28,17 @@ namespace ManiaExchangeClient.Ui
                 viewModel.InitViewModel(DialogCoordinator.Instance);
                 viewModel.CloseWindow += Close;
             }
+        }
+
+        /// <summary>
+        /// Occ
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SettingsWindow_OnClosing(object sender, CancelEventArgs e)
+        {
+            if (DataContext is SettingsWindowViewModel viewModel)
+                viewModel.ChangeTheme(true);
         }
     }
 }

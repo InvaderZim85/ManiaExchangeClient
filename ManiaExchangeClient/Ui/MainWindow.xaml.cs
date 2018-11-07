@@ -40,6 +40,15 @@ namespace ManiaExchangeClient.Ui
             ReplayControl.InitControl();
 
             viewModel.SelectionChanged += ViewModel_SelectionChanged;
+            viewModel.SearchStarted += ViewModel_SearchStarted;
+        }
+
+        /// <summary>
+        /// Occurs when the user starts a new search
+        /// </summary>
+        private void ViewModel_SearchStarted()
+        {
+            TabControl.SelectedIndex = 0;
         }
 
         /// <summary>
