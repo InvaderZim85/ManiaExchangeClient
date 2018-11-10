@@ -62,13 +62,19 @@ namespace ManiaExchangeClient.Ui
             if (viewModel.SelectedTrack == null)
                 return;
 
-            if (TabControl.SelectedIndex == 2 && viewModel.SelectedTrack.ReplayCount == 0)
+            if (TabControl.SelectedIndex == 2)
             {
-                TabControl.SelectedIndex = 0;
+                if (viewModel.SelectedTrack.ReplayCount == 0)
+                    TabControl.SelectedIndex = 0;
+                else
+                    ReplayControl.LoadData(viewModel.SelectedTrack.TrackId);
             }
-            else if (TabControl.SelectedIndex == 3 && viewModel.SelectedTrack.EmbeddedObjectsCount == 0)
+            else if (TabControl.SelectedIndex == 3)
             {
-                TabControl.SelectedIndex = 0;
+                if (viewModel.SelectedTrack.EmbeddedObjectsCount == 0)
+                    TabControl.SelectedIndex = 0;
+                else
+                    ObjectControl.LoadData(viewModel.SelectedTrack.TrackId);
             }
         }
 
