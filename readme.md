@@ -14,6 +14,8 @@
 
 <!-- /TOC -->
 
+Last build: [![Build Status](https://travis-ci.com/InvaderZim85/ManiaExchangeClient.svg?branch=master)](https://travis-ci.com/InvaderZim85/ManiaExchangeClient)
+
 ## General
 This is a small program to gather informations from [Mania Exchange](https://tm.mania-exchange.com/) via their provides [API](https://api.mania-exchange.com/).
 
