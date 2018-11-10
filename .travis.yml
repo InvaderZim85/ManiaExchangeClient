@@ -1,3 +1,2 @@
 language: csharp
 solution: ManiaExchangeClient.sln
-os: windows
